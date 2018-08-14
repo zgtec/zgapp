@@ -21,7 +21,11 @@ class Configurator
         $this->moduleName = basename(dirname(dirname($trace['file'])));
         $this->dir = dirname(dirname($trace['file']));
         $this->file = new \ZgApp\Controller\Plugin\File();
+        if ($this->moduleName=='zgapp') {
+            $this->moduleName='ZgApp';
+        }
     }
+
 
     public function setModuleLayout($name, $moduleName = false)
     {
@@ -127,6 +131,7 @@ class Configurator
     public function autoLoadConfig()
     {
         $src = $this->dir . "/src/" . $this->moduleName;
+        $src = str_replace('/src/ZgApp','/src', $src);
 
         $this->setTemplatePathStack();
         $this->setTemplateMap($this->file->listFilesRecursive($this->dir . "/view", '.phtml'));

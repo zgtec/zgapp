@@ -31,7 +31,7 @@ class Html extends AbstractFilter
 
     public function __construct()
     {
-        $vendorDir = dirname(dirname(dirname(dirname(__FILE__)))) . "/vendor/";
+        $vendorDir = dirname(dirname(dirname(__FILE__))).'/vendor';
         require_once $vendorDir . '/HTMLPurifier/HTMLPurifier.auto.php';
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.DefinitionImpl', null);

@@ -51,7 +51,7 @@ class AuthAcl extends AbstractPlugin
      */
     public function setUserPermissions($role)
     {
-        if ($this->user->role != $role) {
+        if ($this->user->role != $role || $this->user->role=='guest') {
             return false;
         }
 
@@ -127,7 +127,7 @@ class AuthAcl extends AbstractPlugin
         $acl = $this->getAcl();
 
         // Granting Access to Super User
-        if ($this->user->superuser) {
+        if ($this->user->role!='guest' && $this->user->superuser) {
             return true;
         }
 
