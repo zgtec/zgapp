@@ -1,7 +1,7 @@
 {
   "name": "zgtec/zgapp",
   "description": "ZgApp module for zend framework 3",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "license": "MIT",
   "homepage": "https://github.com/zgtec/zgapp",
   "require": {
@@ -9,12 +9,12 @@
   },
   "autoload": {
     "psr-4": {
-      "ZgApp\\": "src"
+      "ZgApp\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ZgApp\\": "src"
+      "ZgApp\\": "src/"
     }
   }
 }
