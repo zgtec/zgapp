@@ -1,6 +1,7 @@
 {
   "name": "zgtec/zgapp",
   "description": "ZgApp module for zend framework 3",
+  "version" : "2.0.0",
   "autoload": {
     "psr-0": {
       "ZgApp\\": ""
