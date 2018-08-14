@@ -1,7 +1,7 @@
 {
   "name": "zgtec/zgapp",
   "description": "ZgApp module for zend framework 3",
-  "version": "2.0.2",
+  "version": "2.1",
   "license": "MIT",
   "homepage": "https://github.com/zgtec/zgapp",
   "require": {
