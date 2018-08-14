@@ -1,0 +1,30 @@
+{
+  "name": "ZgApp",
+  "description": "ZgApp module for zend framework 3",
+  "license": "GPL",
+  "keywords": [
+    "zf2",
+    "zf3",
+    "zgtec",
+    "zgapp"
+  ],
+  "autoload": {
+    "psr-0": {
+      "ZgApp\\": ""
+    }
+  },
+  "require": {
+    "php": "^7.1",
+    "container-interop/container-interop": "^1.1",
+    "zendframework/zend-mvc": "^2.4 || ^3.0",
+    "zendframework/zend-http": "^2.4 || ^3.0",
+    "zendframework/zend-modulemanager": "^2.4 || ^3.0",
+    "zendframework/zend-config": "^2.4 || ^3.0",
+    "zendframework/zend-log": "^2.4 || ^3.0",
+    "zendframework/zend-db": "^2.4 || ^3.0",
+    "zendframework/zend-view": "^2.4 || ^3.0",
+    "zendframework/zend-console": "^2.4 || ^3.0",
+    "zendframework/zend-json": "^2.4 || ^3.0"
+  },
+  "target-dir": "ZgApp"
+}
