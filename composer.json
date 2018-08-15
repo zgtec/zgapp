@@ -26,7 +26,9 @@
     "zendframework/zend-session": "^2.8",
     "zendframework/zend-router": "^3.2",
     "zendframework/zend-validator": "^2.10",
-    "zendframework/zend-permissions-acl": "^2.7"
+    "zendframework/zend-permissions-acl": "^2.7",
+    "zendframework/zend-math": "^3.1",
+    "zendframework/zend-feed": "^2.10"
   },
   "autoload": {
     "psr-4": {
@@ -36,6 +38,12 @@
   "autoload-dev": {
     "psr-4": {
       "ZgApp\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0-dev",
+      "dev-develop": "3.1-dev"
     }
   }
 }
