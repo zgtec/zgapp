@@ -240,12 +240,6 @@ class Pci extends \Zend\Form\Form
             return false;
         $states = $this->controller->stateslist()->getStates($countryId);
 
-        if ($this->getName() === 'ajax')
-            $add = '_ajax';
-        else
-            $add = '';
-
-
         if ($this->has('state'))
             $this->remove('state');
 

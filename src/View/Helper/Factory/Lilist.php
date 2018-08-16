@@ -18,7 +18,7 @@ namespace ZgApp\View\Helper\Factory;
  * @link        https://github.com/zgtec/zgapp
  * @since       File available since Release 1.0
  */
-class Lilist extends \ZgApp\View\Helper\Factory\AbstractFactory
+class Lilist extends AbstractFactory
 {
     protected $module = 'ZgApp';
 

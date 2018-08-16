@@ -98,7 +98,6 @@ class LogEvent implements \Zend\ServiceManager\Factory\FactoryInterface
      */
     public function logEvent($event, $status, $priority = 3, $username = false, $userid = false, $code = false, $detailed = false)
     {
-        $property = $this->controller->property;
 
         if (!$code && isset($this->controller->domain)) {
             $code = $this->controller->domain;

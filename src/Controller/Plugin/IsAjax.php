@@ -45,6 +45,7 @@ class IsAjax extends AbstractPlugin
         if (!$this->getController()->getRequest()->isXmlHttpRequest()) {
             die($this->getController()->render('zg-app/zg-app/errors/denied'));
         }
+        return true;
     }
 
 }

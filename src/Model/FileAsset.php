@@ -8,13 +8,26 @@
 namespace ZgApp\Model;
 
 /**
- * ZgApp File Asset Class
+ *
+ * Class ZgApp\Model\FileAsset
+ *
+ *
+ *
+ * @project     ZgApp 3 module
+ * @author      Vladimir Dubina <vladimir@zgtec.com>
+ * @link        https://github.com/zgtec/zgapp
+ * @since       File available since Release 1.0
  */
 class FileAsset
 {
 
     /**
-     * getArrayCopy() - returns object variables as array
+     * Function getArrayCopy
+     *
+     * returns object variables as array
+     *
+     * @param bool $allowNull
+     * @return array
      */
     public function getArrayCopy($allowNull = false)
     {
@@ -29,7 +42,11 @@ class FileAsset
     }
 
     /**
-     * setArrayCopy() - setting object properties from data array
+     * Function setArrayCopy
+     *
+     *  setting object properties from data array
+     *
+     * @param $data
      */
     public function setArrayCopy($data)
     {

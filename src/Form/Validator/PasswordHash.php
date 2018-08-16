@@ -81,8 +81,6 @@ class PasswordHash extends \Zend\Validator\AbstractValidator
 
         $this->error(self::LOCKED);
         return false;
-
-        return false;
     }
 
 }

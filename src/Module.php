@@ -8,6 +8,7 @@
 namespace ZgApp;
 
 use Zend\EventManager\StaticEventManager;
+use ZgApp\Filter\Format;
 
 /**
  *
@@ -58,7 +59,6 @@ class Module
 
         // Attaching postDispatch function to controller
         $app = $e->getApplication();
-        $sm = $app->getServiceManager();
         $eventManager = $app->getEventManager();
 
         $eventManager->getSharedManager()->attach('Zend\Mvc\Application', 'finish', array($this, 'postDispatch'), 1002);
@@ -136,7 +136,7 @@ class Module
         if (!$request instanceof \Zend\Console\Request && ($request->isPost() || 1)) {
             $post = $request->getPost();
             $filteredPost = array();
-            $format = new \ZgApp\Filter\Format();
+            $format = new Format();
             foreach ($post as $key => $val) {
                 if (is_array($val))
                     $filteredPost[$key] = $val;

@@ -18,7 +18,7 @@ namespace ZgApp\View\Helper\Factory;
  * @link        https://github.com/zgtec/zgapp
  * @since       File available since Release 1.0
  */
-class Purify extends \ZgApp\View\Helper\Factory\AbstractFactory
+class Purify extends AbstractFactory
 {
     protected $module = 'ZgApp';
 

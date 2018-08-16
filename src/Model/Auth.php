@@ -9,6 +9,8 @@ namespace ZgApp\Model;
 
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\DbTable as AuthAdapter;
+use ZgApp\Model\Db\Table;
+use ZgApp\Model\Db\User;
 
 /**
  *
@@ -41,7 +43,7 @@ class Auth extends AuthenticationService
      */
     public function setDbAdapter($adapter, $entity)
     {
-        $dbTable = new \ZgApp\Model\Db\Table($adapter);
+        $dbTable = new Table($adapter);
         $dbTable->init($entity);
         $this->dbTable = $dbTable;
 
@@ -169,7 +171,7 @@ class Auth extends AuthenticationService
      * @param Db\User $admin
      * @return mixed
      */
-    public function generateHashes(\ZgApp\Model\Db\User $admin)
+    public function generateHashes(User $admin)
     {
         $hashes = $this->getReader()->fromString($admin->hashes);
         if (!is_array($hashes)) {
@@ -199,7 +201,7 @@ class Auth extends AuthenticationService
      * @param $password
      * @return bool
      */
-    public function checkHashes(\ZgApp\Model\Db\User $admin, $password)
+    public function checkHashes(User $admin, $password)
     {
         $hashes = $this->getReader()->fromString($admin->hashes);
         if (!is_array($hashes)) {

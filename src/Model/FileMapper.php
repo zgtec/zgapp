@@ -39,10 +39,17 @@ class FileMapper
         $data = $reader->fromFile($filename);
 
         $this->asset->setArrayCopy($data);
+        return true;
     }
 
+
     /**
-     * save() - saving data to the file
+     * Function save
+     *
+     * saving data to the file
+     *
+     * @param array $data
+     * @return bool
      */
     public function save($data = array())
     {
@@ -52,13 +59,14 @@ class FileMapper
         \array_walk_recursive($data, '\ZgApp\Filter\Html::recursive');
 
         if (count($data) === 0) {
-            return;
+            return false;
         }
 
         $this->setArrayCopy($data);
 
         $writer = $this->getWriter();
         $writer->toFile($filename, $this->asset->getArrayCopy(true));
+        return true;
     }
 
     /*
@@ -124,7 +132,12 @@ class FileMapper
     }
 
     /**
-     * imagesReorder() - reorder images
+     * Function imagesReorder
+     *
+     * reorder images
+     *
+     * @param $dir
+     * @param $num
      */
     public function imagesReorder($dir, $num)
     {
@@ -145,7 +158,12 @@ class FileMapper
     }
 
     /**
-     * setArrayCopy() - sets array to asset properties
+     * Function setArrayCopy
+     *
+     *
+     *
+     * @param $data
+     * @return mixed
      */
     public function setArrayCopy($data)
     {

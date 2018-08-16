@@ -22,7 +22,7 @@ namespace ZgApp\View\Helper;
  * @link        https://github.com/zgtec/zgapp
  * @since       File available since Release 1.0
  */
-class S extends \ZgApp\View\Helper\AbstractHelper
+class S extends AbstractHelper
 {
     /**
      * Function __invoke

@@ -70,7 +70,7 @@ class Table extends AbstractTableGateway
      */
     public function expression($in)
     {
-        $expression = new \Zend\Db\Sql\Expression();
+        $expression = new Expression();
         $expression->setExpression($in);
         return $expression;
     }
@@ -221,7 +221,6 @@ class Table extends AbstractTableGateway
         $select = $this->getSelect();
         if ($where) {
             if (isset($where['select_columns'])) {
-                $isColumns = true;
                 $select->columns($where['select_columns']);
                 unset($where['select_columns']);
             }
@@ -241,10 +240,11 @@ class Table extends AbstractTableGateway
      *
      *
      *
+     * @param array $data
      * @return mixed
      * @throws \Exception
      */
-    public function saveRow()
+    public function saveRow($data = array())
     {
         $data = array();
         foreach ($this->entity->getArrayCopy() as $key => $val) {
@@ -336,7 +336,6 @@ class Table extends AbstractTableGateway
             return false;
         $rows = $this->fetchRows($orderby, $where);
 
-        $break = false;
         $up = array();
         $down = array();
         $previous = array();
@@ -372,6 +371,7 @@ class Table extends AbstractTableGateway
             $this->saveRow(array("id" => $current['id'], "orderid" => $down['orderid']));
             $this->saveRow(array("id" => $down['id'], "orderid" => $current['orderid']));
         }
+        return true;
     }
 
 }

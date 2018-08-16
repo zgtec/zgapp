@@ -33,7 +33,7 @@ class ForceHttps extends AbstractPlugin
     public function __invoke()
     {
         if ($this->getController()->mainconfig['session']['cookie_secure'] !== 'true' || $this->getController()->getRequest()->getUri()->getScheme() === 'https') {
-            return;
+            return false;
         }
 
         // Not secure, create full url

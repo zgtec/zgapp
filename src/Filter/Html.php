@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 /**
  * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited.

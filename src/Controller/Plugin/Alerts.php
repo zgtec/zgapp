@@ -75,6 +75,7 @@ class Alerts extends AbstractPlugin
             $count = 0;
         }
         $this->cacher->setItem($this->key, $count + 1);
+        return true;
     }
 
     /**
@@ -91,6 +92,7 @@ class Alerts extends AbstractPlugin
         }
         $count = $this->cacher->getItem($this->key);
         $this->cacher->setItem($this->key, ($count > 0) ? $count - 1 : 0);
+        return true;
     }
 
 }

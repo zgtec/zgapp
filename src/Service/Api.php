@@ -71,8 +71,9 @@ class Api implements \Zend\ServiceManager\Factory\FactoryInterface
      */
     public function request($name, $vars)
     {
-        if (is_null($this->controller))
+        if (is_null($this->controller)) {
             throw new \Exception('Controller was not setup');
+        }
 
         $vars['apiname'] = $name;
         $cname = md5($_SERVER['HTTP_HOST'] . '-' . $name . md5(serialize($vars)));
@@ -94,11 +95,15 @@ class Api implements \Zend\ServiceManager\Factory\FactoryInterface
         return $response;
     }
 
+    /**
+     * Function cleancache
+     *
+     *
+     *
+     * @throws \Exception
+     */
     public function cleancache()
     {
-        if (is_null($this->controller))
-            throw new \Exception('Controller was not setup');
-
         $this->controller->cacheFile()->flush();
     }
 

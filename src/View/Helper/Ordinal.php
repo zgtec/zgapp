@@ -22,7 +22,7 @@ namespace ZgApp\View\Helper;
  * @link        https://github.com/zgtec/zgapp
  * @since       File available since Release 1.0
  */
-class Ordinal extends \ZgApp\View\Helper\AbstractHelper
+class Ordinal extends AbstractHelper
 {
     protected $nums = array('zero', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth');
     protected $snums = array('0', '1st', '2nd', '3d', '4th', '5th', '6th', '7th', '8th', '9th');

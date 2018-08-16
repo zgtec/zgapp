@@ -18,7 +18,7 @@ namespace ZgApp\View\Helper\Factory;
  * @link        https://github.com/zgtec/zgapp
  * @since       File available since Release 1.0
  */
-class Service extends \ZgApp\View\Helper\Factory\AbstractFactory
+class Service extends AbstractFactory
 {
     protected $module = 'ZgApp';
 

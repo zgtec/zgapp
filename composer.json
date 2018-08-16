@@ -1,7 +1,7 @@
 {
   "name": "zgtec/zgapp",
   "description": "ZgApp module for zend framework 3",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "license": "MIT",
   "homepage": "https://github.com/zgtec/zgapp",
   "require": {
@@ -28,7 +28,8 @@
     "zendframework/zend-validator": "^2.10",
     "zendframework/zend-permissions-acl": "^2.7",
     "zendframework/zend-math": "^3.1",
-    "zendframework/zend-feed": "^2.10"
+    "zendframework/zend-feed": "^2.10",
+    "ext-zip": "^1.13"
   },
   "autoload": {
     "psr-4": {
@@ -47,4 +48,3 @@
     }
   }
 }
-

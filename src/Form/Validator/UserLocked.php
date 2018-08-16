@@ -66,7 +66,7 @@ class UserLocked extends \Zend\Validator\AbstractValidator
                 return false;
             } else {
                 $data = array('id' => $user->id, 'locktime' => 0, 'lockcount' => 0);
-                $id = $this->controller->db()->model('\ZgApp\Model\Db\User')->save($data);
+                $this->controller->db()->model('\ZgApp\Model\Db\User')->save($data);
             }
         }
         return true;

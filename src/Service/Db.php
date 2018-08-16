@@ -233,7 +233,6 @@ class Db implements \Zend\ServiceManager\Factory\FactoryInterface
             $controller->session($namespace)->page = 1;
         }
 
-        $nopage = false;
         if ($page === 0) {
             $controller->redirect()->toUrl($url . "/" . $controller->session($namespace)->page);
             $controller->getResponse();
