@@ -1,7 +1,8 @@
 <?php
-
 /**
- * File functions Plugin
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
 namespace ZgApp\Controller\Plugin;
@@ -10,7 +11,7 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\File\Transfer\Adapter\Http;
 
 /**
- * Copyright (c) 2010-2018 ZGTec Inc.
+
  * All rights reserved.
  *
  * Class ZgApp\Controller\Plugin\File
@@ -427,9 +428,10 @@ class File extends AbstractPlugin
             $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
             $files = array();
             foreach ($iterator as $info) {
-                //if (!stristr($info->getPathname(), '/view/' . strtolower($this->moduleName))) {
-                $files[] = str_replace(array($dir, $replace), '', $info->getPathname());
-                //}
+                $file = str_replace(array($dir, $replace), '', $info->getPathname());
+                if (!stristr($file,'\.')) {
+                    $files[] = str_replace(array($dir, $replace), '', $info->getPathname());
+                }
             }
         }
         return $files;

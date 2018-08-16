@@ -1,10 +1,13 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 namespace ZgApp\View\Helper\Factory;
 
 /**
- * Copyright (c) 2010-2018 ZGTec Inc.
- * All rights reserved.
  *
  * Class ZgApp\View\Helper\Factory\Ordinal
  *

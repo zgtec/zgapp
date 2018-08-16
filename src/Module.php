@@ -1,12 +1,35 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 namespace ZgApp;
 
 use Zend\EventManager\StaticEventManager;
 
+/**
+ *
+ * Class ZgApp\Module
+ *
+ *
+ *
+ * @project     zgapp module
+ * @author      Vladimir Dubina <vladimir@zgtec.com>
+ * @link        https://github.com/zgtec/zgapp
+ * @since       File available since Release 1.0
+ */
 class Module
 {
 
+    /**
+     * Function onBootstrap
+     *
+     *
+     *
+     * @param $e
+     */
     public function onBootstrap($e)
     {
         // Setting php logs be logged to project directory
@@ -55,6 +78,13 @@ class Module
 
     }
 
+    /**
+     * Function postDispatch
+     *
+     *
+     *
+     * @param \Zend\Mvc\MvcEvent $e
+     */
     public function postDispatch(\Zend\Mvc\MvcEvent $e)
     {
         $response = $e->getResponse();
@@ -90,6 +120,14 @@ class Module
     }
 
     // Filtering POST variables with \Core\Filter\Format filter
+
+    /**
+     * Function filterControllerPost
+     *
+     *
+     *
+     * @param $e
+     */
     protected function filterControllerPost($e)
     {
         $controller = $e->getTarget();
@@ -110,11 +148,25 @@ class Module
         }
     }
 
+    /**
+     * Function getConfig
+     *
+     *
+     *
+     * @return mixed
+     */
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
     }
 
+    /**
+     * Function getAutoloaderConfig
+     *
+     *
+     *
+     * @return array
+     */
     public function getAutoloaderConfig()
     {
         return array(

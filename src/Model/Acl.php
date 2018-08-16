@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 namespace ZgApp\Model;
 
@@ -7,8 +12,6 @@ use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
 /**
- * Copyright (c) 2010-2018 ZGTec Inc.
- * All rights reserved.
  *
  * Class ZgApp\Model\Acl
  *

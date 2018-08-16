@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 /**
  * ZgApp Regexp Filter
@@ -9,8 +14,6 @@
 namespace ZgApp\Filter;
 
 /**
- * Copyright (c) 2010-2018 ZGTec Inc.
- * All rights reserved.
  *
  * Class ZgApp\Filter\Regexp
  *

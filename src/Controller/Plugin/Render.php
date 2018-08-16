@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 /**
  * Render Plugin
@@ -12,8 +17,6 @@ use Zend\View\Renderer\PhpRenderer;
 use Zend\View\Resolver;
 
 /**
- * Copyright (c) 2010-2018 ZGTec Inc.
- * All rights reserved.
  *
  * Class ZgApp\Controller\Plugin\Render
  *

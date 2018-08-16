@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 /**
  * Service helper - allows services to be used in view
@@ -7,8 +12,6 @@
 namespace ZgApp\View\Helper;
 
 /**
- * Copyright (c) 2010-2018 ZGTec Inc.
- * All rights reserved.
  *
  * Class ZgApp\View\Helper\Service
  *

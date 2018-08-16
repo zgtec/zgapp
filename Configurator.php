@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2010-2018. ZGtec,Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
 
 /**
  * View Manager autoloader - should be included to module.config.php
@@ -6,6 +11,17 @@
 
 namespace ZgApp;
 
+/**
+ *
+ * Class ZgApp\Configurator
+ *
+ *
+ *
+ * @project     zgapp module
+ * @author      Vladimir Dubina <vladimir@zgtec.com>
+ * @link        https://github.com/zgtec/zgapp
+ * @since       File available since Release 1.0
+ */
 class Configurator
 {
 
@@ -14,6 +30,9 @@ class Configurator
     protected $file;
     protected $config = array();
 
+    /**
+     * Configurator constructor.
+     */
     public function __construct()
     {
         $debug = debug_backtrace();
@@ -27,6 +46,15 @@ class Configurator
     }
 
 
+    /**
+     * Function setModuleLayout
+     *
+     *
+     *
+     * @param $name
+     * @param bool $moduleName
+     * @return $this
+     */
     public function setModuleLayout($name, $moduleName = false)
     {
         if (!$moduleName) {
@@ -36,6 +64,14 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setExtensionRoute
+     *
+     *
+     *
+     * @param $extension
+     * @return $this
+     */
     public function setExtensionRoute($extension)
     {
         $this->config['router']['routes']['extension_' . $extension] = array(
@@ -52,6 +88,14 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setRoute
+     *
+     *
+     *
+     * @param $name
+     * @return $this
+     */
     public function setRoute($name)
     {
         if ($name == '/') {
@@ -123,11 +167,25 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function getConfig
+     *
+     *
+     *
+     * @return array
+     */
     public function getConfig()
     {
         return $this->config;
     }
 
+    /**
+     * Function autoLoadConfig
+     *
+     *
+     *
+     * @return array
+     */
     public function autoLoadConfig()
     {
         $src = $this->dir . "/src/" . $this->moduleName;
@@ -143,6 +201,14 @@ class Configurator
         return $this->getConfig();
     }
 
+    /**
+     * Function setControllers
+     *
+     *
+     *
+     * @param array $controllers
+     * @return $this
+     */
     public function setControllers(array $controllers)
     {
         foreach ($controllers as $name) {
@@ -152,6 +218,14 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setControllerPlugins
+     *
+     *
+     *
+     * @param array $plugins
+     * @return $this
+     */
     public function setControllerPlugins(array $plugins)
     {
         foreach ($plugins as $name) {
@@ -160,6 +234,14 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setServices
+     *
+     *
+     *
+     * @param array $services
+     * @return $this
+     */
     public function setServices(array $services)
     {
         foreach ($services as $name) {
@@ -168,6 +250,14 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setViewHelpers
+     *
+     *
+     *
+     * @param array $helpers
+     * @return $this
+     */
     public function setViewHelpers(array $helpers)
     {
         foreach ($helpers as $name) {
@@ -183,6 +273,12 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setTemplatePathStack
+     *
+     *
+     *
+     */
     public function setTemplatePathStack()
     {
         $this->config['view_manager']['template_path_stack'] = array(
@@ -200,6 +296,14 @@ class Configurator
             $this->config['view_manager']['template_map']['error/index'] = $this->dir . '/../view/error/index.phtml';
     }
 
+    /**
+     * Function debug
+     *
+     *
+     *
+     * @param bool $debug
+     * @return $this
+     */
     public function debug($debug = false)
     {
         if ($debug) {
@@ -209,6 +313,14 @@ class Configurator
         return $this;
     }
 
+    /**
+     * Function setTemplateMap
+     *
+     *
+     *
+     * @param $templates
+     * @return $this
+     */
     public function setTemplateMap($templates)
     {
         foreach ($templates as $name) {
