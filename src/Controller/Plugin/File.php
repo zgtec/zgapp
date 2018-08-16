@@ -429,7 +429,7 @@ class File extends AbstractPlugin
             $files = array();
             foreach ($iterator as $info) {
                 $file = str_replace(array($dir, $replace), '', $info->getPathname());
-                if (!stristr($file,'\.')) {
+                if (!stristr($file,'\.') && !stristr($file,'/.')) {
                     $files[] = str_replace(array($dir, $replace), '', $info->getPathname());
                 }
             }
