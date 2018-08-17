@@ -134,15 +134,11 @@ class AuthAcl extends AbstractPlugin
             return true;
         }
 
-
-        $controller = explode("\\", $route->getParam('controller'));
-        $controller = strtolower(isset($controller[2]) ? $controller[2] : 'index');
-
-        if (!$acl->hasResource($controller)) {
+        if (!$acl->hasResource($route->getParam('controller'))) {
             return false;
         }
 
-        if ($acl->isAllowed($this->user->role, $controller, $route->getParam('action'))) {
+        if ($acl->isAllowed($this->user->role, $route->getParam('controller'), $route->getParam('action'))) {
             return true;
         }
         return false;
