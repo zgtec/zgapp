@@ -40,7 +40,7 @@ class AuthAcl extends AbstractPlugin
     public function __invoke()
     {
         $this->controller = $this->getController();
-        $this->user = $this->controller->getContainer()->get("auth")->getIdentity();
+        $this->user = $this->controller->admin();
         return $this;
     }
 

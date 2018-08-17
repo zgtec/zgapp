@@ -43,6 +43,20 @@ class Configurator
         if ($this->moduleName=='zgapp') {
             $this->moduleName='ZgApp';
         }
+        $this->setAclRoles();
+    }
+
+    /**
+     * Setting Default Acl Roles
+     *
+     *
+     *
+     * @return $this
+     */
+    public function setAclRoles()
+    {
+        $this->config["acl"]["roles"] = ["guest" => "", "user" => "guest", "admin" => "user"];
+        return $this;
     }
 
 
@@ -135,31 +149,24 @@ class Configurator
         } else {
             $this->config['router']['routes'] = array(
                 strtolower($this->moduleName) => array(
-                    'type' => 'Literal',
+                    'type' => 'Segment',
                     'options' => array(
-                        'route' => '/' . $name,
+                        'route' => '/' . $name .'[/:controller[/:action][/:id]]',
+                        'constraints' => array(
+                            'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        ),
                         'defaults' => array(
+                            // add the default namespace for :controllers in this route
+                            '__NAMESPACE__' => $this->moduleName . '\Controller',
+                        ),
+                        'defaults' => array(
+                            '__NAMESPACE__' => $this->moduleName . '\Controller',
                             'controller' => $this->moduleName . '\Controller\Index',
                             'action' => 'index',
                         ),
                     ),
                     'may_terminate' => true,
-                    'child_routes' => array(
-                        'default' => array(
-                            'type' => 'Segment',
-                            'options' => array(
-                                'route' => '/[:controller[/:action][/:id]]',
-                                'constraints' => array(
-                                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                ),
-                                'defaults' => array(
-                                    // add the default namespace for :controllers in this route
-                                    '__NAMESPACE__' => $this->moduleName . '\Controller',
-                                ),
-                            ),
-                        ),
-                    ),
                 ),
             );
         }
@@ -214,6 +221,7 @@ class Configurator
         foreach ($controllers as $name) {
             $name = str_replace(".php", "", $name);
             $this->config['controllers']['factories'][$this->moduleName . '\Controller\\' . $name] = 'ZgApp\Controller\Factory\AbstractFactory';
+            $this->config["acl"]["resources"][] = $this->moduleName . '\Controller\\' . $name;
         }
         return $this;
     }
@@ -244,6 +252,9 @@ class Configurator
      */
     public function setServices(array $services)
     {
+        $this->config['service_manager']['abstract_factories'] = array(
+            'Zend\Navigation\Service\NavigationAbstractServiceFactory'
+        );
         foreach ($services as $name) {
             $this->config['service_manager']['factories'][lcfirst($name)] = $this->moduleName . '\Service\\' . $name;
         }

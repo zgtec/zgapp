@@ -36,7 +36,14 @@ class Admin extends AbstractPlugin
     public function __invoke()
     {
         $controller = $this->getController();
-        return $controller->getContainer()->get("auth")->getIdentity();
+
+        $user = $controller->getContainer()->get("auth")->getIdentity();
+        if (isset($user->id) && $user->id>0) {
+            $current = $controller->db()->model('Admin\Model\Db\User')->find($user->id);
+            return $current;
+        } else {
+            return $user;
+        }
     }
 
 }
