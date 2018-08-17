@@ -11,7 +11,6 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\File\Transfer\Adapter\Http;
 
 /**
-
  * All rights reserved.
  *
  * Class ZgApp\Controller\Plugin\File
@@ -376,7 +375,7 @@ class File extends AbstractPlugin
         $out = array();
         if ($handle = opendir($dir)) {
             while (false !== ($entry = readdir($handle))) {
-                if ($entry != "." && $entry != ".." && !is_dir($dir . '/' . $entry)) {
+                if ($entry != "." && $entry != ".." && substr($entry, 0, 1) != '.' && !is_dir($dir . '/' . $entry)) {
                     $out[] = str_replace($replace, "", $entry);
                 }
             }
@@ -429,7 +428,7 @@ class File extends AbstractPlugin
             $files = array();
             foreach ($iterator as $info) {
                 $file = str_replace(array($dir, $replace), '', $info->getPathname());
-                if (!stristr($file,'\.') && !stristr($file,'/.')) {
+                if (!stristr($file, '\.') && !stristr($file, '/.')) {
                     $files[] = str_replace(array($dir, $replace), '', $info->getPathname());
                 }
             }

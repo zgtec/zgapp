@@ -25,24 +25,25 @@ namespace ZgApp;
 class Configurator
 {
 
+    public $file;
     protected $moduleName;
     protected $dir;
-    protected $file;
     protected $config = array();
 
     /**
      * Configurator constructor.
      */
-    public function __construct()
+    public function __construct($moduleName = false, $dir = false, $config = array())
     {
         $debug = debug_backtrace();
         $trace = array_shift($debug);
-        $this->moduleName = basename(dirname(dirname($trace['file'])));
-        $this->dir = dirname(dirname($trace['file']));
         $this->file = new \ZgApp\Controller\Plugin\File();
-        if ($this->moduleName=='zgapp') {
-            $this->moduleName='ZgApp';
+        $this->moduleName = ($moduleName) ? $moduleName : basename(dirname(dirname($trace['file'])));
+        if ($this->moduleName == 'zgapp') {
+            $this->moduleName = 'ZgApp';
         }
+        $this->dir = ($dir) ? $dir : dirname(dirname($trace['file']));
+        $this->config = $config;
         $this->setAclRoles();
     }
 
@@ -147,27 +148,25 @@ class Configurator
                 ),
             );
         } else {
-            $this->config['router']['routes'] = array(
-                strtolower($this->moduleName) => array(
-                    'type' => 'Segment',
-                    'options' => array(
-                        'route' => '/' . $name .'[/:controller[/:action][/:id]]',
-                        'constraints' => array(
-                            'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        ),
-                        'defaults' => array(
-                            // add the default namespace for :controllers in this route
-                            '__NAMESPACE__' => $this->moduleName . '\Controller',
-                        ),
-                        'defaults' => array(
-                            '__NAMESPACE__' => $this->moduleName . '\Controller',
-                            'controller' => $this->moduleName . '\Controller\Index',
-                            'action' => 'index',
-                        ),
+            $this->config['router']['routes'][strtolower($this->moduleName)] = array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/' . $name . '[/:controller[/:action][/:id]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
-                    'may_terminate' => true,
+                    'defaults' => array(
+                        // add the default namespace for :controllers in this route
+                        '__NAMESPACE__' => $this->moduleName . '\Controller',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => $this->moduleName . '\Controller',
+                        'controller' => $this->moduleName . '\Controller\Index',
+                        'action' => 'index',
+                    ),
                 ),
+                'may_terminate' => true,
             );
         }
 
@@ -196,7 +195,7 @@ class Configurator
     public function autoLoadConfig()
     {
         $src = $this->dir . "/src/" . $this->moduleName;
-        $src = str_replace('/src/ZgApp','/src', $src);
+        $src = str_replace('/src/ZgApp', '/src', $src);
 
         $this->setTemplatePathStack();
         $this->setTemplateMap($this->file->listFilesRecursive($this->dir . "/view", '.phtml'));
@@ -292,19 +291,18 @@ class Configurator
      */
     public function setTemplatePathStack()
     {
-        $this->config['view_manager']['template_path_stack'] = array(
-            strtolower($this->moduleName) => $this->dir . '/view',
-        );
-        $this->config['view_manager']['strategies'] = array(
-            'ViewJsonStrategy',
-        );
         $this->config['view_manager']['doctype'] = 'HTML5';
+        $this->config['view_manager']['strategies'] = ['ViewJsonStrategy'];
         $this->config['view_manager']['not_found_template'] = 'error/404';
         $this->config['view_manager']['exception_template'] = 'error/index';
-        if (file_exists($this->dir . '/../view/error/404.phtml'))
+        $this->config['view_manager']['template_path_stack'][strtolower($this->moduleName)] = $this->dir . '/view';
+        if (file_exists($this->dir . '/../view/error/404.phtml')) {
             $this->config['view_manager']['template_map']['error/404'] = $this->dir . '/../view/error/404.phtml';
-        if (file_exists($this->dir . '/../view/error/index.phtml'))
+        }
+        if (file_exists($this->dir . '/../view/error/index.phtml')) {
             $this->config['view_manager']['template_map']['error/index'] = $this->dir . '/../view/error/index.phtml';
+        }
+
     }
 
     /**
