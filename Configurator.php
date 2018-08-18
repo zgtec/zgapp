@@ -113,8 +113,8 @@ class Configurator
      */
     public function setRoute($name)
     {
-        if ($name == '/') {
-            $this->config['router']['routes']['home'] = array(
+        if ($name == '/' || $name == '') {
+            $this->config['router']['routes']['homeapp'] = array(
                 'type' => 'Zend\Router\Http\Literal',
                 'options' => array(
                     'route' => '/',
@@ -124,29 +124,35 @@ class Configurator
                     ),
                 ),
             );
-            $this->config['router']['routes'][strtolower($this->moduleName)] = array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '[/:controller][/:action][/:id][/:k]',
-                    'constraints' => array(
-                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'k' => '[a-zA-Z][a-zA-Z0-9_-]*',
+
+            $src = $this->dir . "/src/" . $this->moduleName;
+            $src = str_replace('/src/ZgApp', '/src', $src);
+            $controllers = $this->file->listFiles($src . '/Controller', 'Controller.php');
+
+            foreach ($controllers as $controller) {
+                if (in_array($controller, ['Abstract'])) {
+                    continue;
+                }
+                $this->config['router']['routes'][strtolower($this->moduleName . '-' . $controller)] = array(
+                    'type' => 'segment',
+                    'options' => array(
+                        'route' => '/' . strtolower($controller) . '[/:action][/:id][/:k]',
+                        'constraints' => array(
+                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            'k' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        ),
+                        'defaults' => array(
+                            '__NAMESPACE__' => $this->moduleName . '\Controller',
+                            'controller' => strtolower($controller),
+                            'action' => 'index'
+                        ),
                     ),
-                    'defaults' => array(
-                        '__NAMESPACE__' => $this->moduleName . '\Controller',
-                        'action' => 'index'
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type' => 'Wildcard',
-                        'options' => array(),
-                    ),
-                ),
-            );
+                    'may_terminate' => false,
+                );
+            }
+
+
         } else {
             $this->config['router']['routes'][strtolower($this->moduleName)] = array(
                 'type' => 'Segment',
@@ -166,7 +172,7 @@ class Configurator
                         'action' => 'index',
                     ),
                 ),
-                'may_terminate' => true,
+                'may_terminate' => false,
             );
         }
 
@@ -271,13 +277,6 @@ class Configurator
     public function setViewHelpers(array $helpers)
     {
         foreach ($helpers as $name) {
-            /* $this->config['view_helpers']['factories'][lcfirst($name)] = function($pm, $name) {
-                 $classname = $this->moduleName . "\View\Helper\\" . ucfirst($name);
-                 $viewHelper = new $classname;
-                 $viewHelper->setServiceLocator($pm->getServiceLocator());
-                 return $viewHelper;
-             };
-            */
             $this->config['view_helpers']['factories'][lcfirst($name)] = $this->moduleName . "\View\Helper\Factory\\" . ucfirst($name);
         }
         return $this;
@@ -296,11 +295,11 @@ class Configurator
         $this->config['view_manager']['not_found_template'] = 'error/404';
         $this->config['view_manager']['exception_template'] = 'error/index';
         $this->config['view_manager']['template_path_stack'][strtolower($this->moduleName)] = $this->dir . '/view';
-        if (file_exists($this->dir . '/../view/error/404.phtml')) {
-            $this->config['view_manager']['template_map']['error/404'] = $this->dir . '/../view/error/404.phtml';
+        if (file_exists($this->dir . '/view/error/404.phtml')) {
+            //$this->config['view_manager']['template_map']['error/404'] = $this->dir . '/view/error/404.phtml';
         }
-        if (file_exists($this->dir . '/../view/error/index.phtml')) {
-            $this->config['view_manager']['template_map']['error/index'] = $this->dir . '/../view/error/index.phtml';
+        if (file_exists($this->dir . '/view/error/index.phtml')) {
+            //$this->config['view_manager']['template_map']['error/index'] = $this->dir . '/view/error/index.phtml';
         }
 
     }

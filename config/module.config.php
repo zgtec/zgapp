@@ -17,8 +17,8 @@ $modulesPath = realpath(__DIR__ . '/../../../../module');
 $modulesDirectories = $configurator->file->listDirs($modulesPath);
 foreach ($modulesDirectories as $moduleName) {
     $moduleConfig = (\Zend\Config\Factory::fromFile($modulesPath . '/' . $moduleName . '/config/module.config.php'));
-    if (isset($moduleConfig['configurator'])) {
-        $mc = $moduleConfig['configurator'];
+    if (isset($moduleConfig['configurator'][strtolower($moduleName)])) {
+        $mc = $moduleConfig['configurator'][strtolower($moduleName)];
         $mconfigurator[$moduleName] = new \ZgApp\Configurator($moduleName, $modulesPath . '/' . $moduleName, $config);
         if (isset($mc['route'])) {
             $mconfigurator[$moduleName]->setRoute($mc['route']);
@@ -29,6 +29,8 @@ foreach ($modulesDirectories as $moduleName) {
         $config = $mconfigurator[$moduleName]->debug($debug)->autoLoadConfig();
     }
 }
+
+
 
 
 return $config;

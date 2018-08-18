@@ -68,7 +68,7 @@ class Module
         $eventManager = $e->getApplication()->getEventManager();
         $eventManager->attach(\Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR, function ($e) {
             $result = $e->getResult();
-            $result->setTerminal(TRUE);
+            //$result->setTerminal(TRUE);
         });
 
         // Attaching Post Filtering

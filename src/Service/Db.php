@@ -220,82 +220,48 @@ class Db implements \Zend\ServiceManager\Factory\FactoryInterface
      * @param bool $skipCount
      * @return array
      */
-    public function crudTable($tableName = 'Items List', $orderby = 'id', $where = false, $perPage = false, $skipCount = false)
+    public function crudTable($params)
     {
-        $controller = $this->controller;
-        $route = $controller->getEvent()->getRouteMatch();
-        $namespace = $route->getParam('controller') . $route->getParam('action');
-
-        $page = (int)$route->getParam('id');
-        $url = $controller->getRequest()->getRequestUri();
-
-        if (!isset($controller->session($namespace)->page)) {
-            $controller->session($namespace)->page = 1;
+        // Setting Offset
+        $offset = ($params->page - 1) * $params->perpage;
+        if ($offset < 0) {
+            $offset = 0;
         }
 
-        if ($page === 0) {
-            $controller->redirect()->toUrl($url . "/" . $controller->session($namespace)->page);
-            $controller->getResponse();
-        }
-        $url = dirname($url);
-
-        if (!isset($controller->session($namespace)->orderby)) {
-            $controller->session($namespace)->orderby = $orderby;
+        if (!is_array($params->orderby) && !in_array($params->orderby,$this->entity->getColumns())) {
+            $params->orderby = 'id';
         }
 
-        $orderby = $controller->params()->fromQuery('orderby');
-        if (strlen($orderby)) {
-            $orderdir = "orderdir_" . $orderby;
-            if ($controller->session($namespace)->$orderdir == 'asc') {
-                $controller->session($namespace)->$orderdir = 'desc';
-            } else {
-                $controller->session($namespace)->$orderdir = 'asc';
-            }
-            $controller->session($namespace)->orderby = $orderby . " " . $controller->session($namespace)->$orderdir;
-            $controller->session($namespace)->page = 1;
-            $controller->redirect()->toUrl($url . "/" . $controller->session($namespace)->page);
-            $controller->getResponse();
-        }
-
-        $controller->session($namespace)->page = $page;
-
-        $config = $this->serviceManager->get('Config');
-        $limit = ($perPage) ? $perPage : $config['paginator']['perpage'];
-        $offset = ($page - 1) * $limit;
-        if ($offset < 0) $offset = 0;
-
-        $results = $this->fetchRows($controller->session($namespace)->orderby, $where, $limit, $offset);
-        $count = $results->count();
-        $total = ($skipCount) ? $count : $this->countRows($where);
-
-        if ($count < 1 && $page > 1) {
-            $controller->redirect()->toUrl($url . "/" . ($page - 1));
-            $controller->getResponse();
-        }
-
-        if (!is_array($controller->session($namespace)->orderby)) {
-            $order = explode(" ", $controller->session($namespace)->orderby);
-            $orderdir = $order[0];
-            $controller->session($namespace)->$orderdir = (strlen($order[1])) ? $order[1] : 'asc';
+        if (is_array($params->orderby)) {
+            $orderby = $params->orderby;
+        } elseif (isset($params->orderdir[$params->orderby])) {
+            $orderby = $params->orderby . ' ' . $params->orderdir[$params->orderby];
         } else {
-            $order = array(null, null);
+            $orderby = $params->orderby . ' asc';
         }
 
-        $out = array(
+
+        $results = $this->fetchRows($orderby, $params->where, $params->perpage, $offset);
+        $count = $results->count();
+        $total = $this->countRows($params->where);
+
+        if ($count < 1 && $params->page > 1) {
+            return "RESET";
+        }
+
+        return [
             "tableName" => '',
             "results" => $results,
-            "count" => $results->count(),
+            "count" => $count,
             "total" => $total,
-            "page" => $page,
-            "pages" => ceil($total / $limit),
+            "page" => $params->page,
+            "pages" => ceil($total / $params->perpage),
             "start" => $offset + 1,
             "end" => $offset + $count,
-            "url" => $url . "/",
-            "orderby" => $order[0],
-            "orderdir" => $order[1],
-        );
-
-        return $out;
+            "url" => $params->link . "/",
+            "orderby" => is_array($params->orderby) ? '' : $params->orderby,
+            "orderdir" => (!is_array($params->orderby) && isset($params->orderdir[$params->orderby]))?$params->orderdir[$params->orderby]:'asc',
+        ];
     }
 
     /**

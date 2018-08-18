@@ -61,12 +61,7 @@ class AuthAcl extends AbstractPlugin
         $add = array();
         $permissions = array();
 
-        if ($role == 'admin') {
-            $permissionsSelect = $this->controller->mainconfig['acl']['adminPermissions'];
-            $permissionsSelect += $this->controller->mainconfig['acl']['userPermissions'];
-        } else {
-            $permissionsSelect = $this->controller->mainconfig['acl'][$role . 'Permissions'];
-        }
+        $permissionsSelect = $this->controller->mainconfig['acl']['assignable'][$role];
 
         if ($this->user->superuser) {
             foreach ($permissionsSelect as $pk => $ps) {
