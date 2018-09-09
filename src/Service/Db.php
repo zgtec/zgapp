@@ -278,15 +278,18 @@ class Db implements \Zend\ServiceManager\Factory\FactoryInterface
         if (is_object($data)) {
             $data = (array)$data;
         }
-        if ($data['id'] < 1) {
+        if (!isset($data['id']) || $data['id'] < 1) {
             unset($data['id']);
         }
         if (is_array($data)) {
             $this->entity->exchangeArray($data);
         }
-        if (count($this->entity->getArrayCopy()) > 1)
+        if (count($this->entity->getArrayCopy()) > 1) {
             return $this->table()->saveRow();
-        else return false;
+        }
+        else {
+            return false;
+        }
     }
 
     /**

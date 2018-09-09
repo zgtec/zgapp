@@ -136,11 +136,13 @@ class Configurator
                 $this->config['router']['routes'][strtolower($this->moduleName . '-' . $controller)] = array(
                     'type' => 'segment',
                     'options' => array(
-                        'route' => '/' . strtolower($controller) . '[/:action][/:id][/:k]',
+                        'route' => '/' . strtolower($controller) . '[/][:action][/:id][/:k][/:s][/:i]',
                         'constraints' => array(
                             'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            'k' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            'k' => '[a-zA-Z0-9_-]*',
+                            's' => '[a-zA-Z0-9_-]*',
+                            'i' => '[a-zA-Z0-9_-]*'
                         ),
                         'defaults' => array(
                             '__NAMESPACE__' => $this->moduleName . '\Controller',
@@ -157,10 +159,14 @@ class Configurator
             $this->config['router']['routes'][strtolower($this->moduleName)] = array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/' . $name . '[/:controller[/:action][/:id]]',
+                    'route' => '/' . $name . '[/:controller[/:action][/:id][/:k][/:s][/:i]]',
                     'constraints' => array(
-                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'controller' => '[a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                        'k' => '[a-zA-Z0-9_-]*',
+                        's' => '[a-zA-Z0-9_-]*',
+                        'i' => '[a-zA-Z0-9_-]*'
                     ),
                     'defaults' => array(
                         // add the default namespace for :controllers in this route

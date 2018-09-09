@@ -178,6 +178,10 @@ class Table extends AbstractTableGateway
                 $select->group($where['groupby']);
                 unset($where['groupby']);
             }
+            if (isset($where['select_columns'])) {
+                $select->columns($where['select_columns']);
+                unset($where['select_columns']);
+            }
             $select->where($where);
 
         }
@@ -254,7 +258,7 @@ class Table extends AbstractTableGateway
                 $data[$key] = $val;
             }
         }
-        $id = (int)$this->entity->id;
+        $id = isset($this->entity->id) ? (int)$this->entity->id : 0;
         if ($id == 0) {
             $this->insert($data);
             if (property_exists($this->entity, "orderid"))

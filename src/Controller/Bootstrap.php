@@ -8,6 +8,7 @@
 namespace ZgApp\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\EventManager\EventManagerInterface;
 
 /**
  *
@@ -32,6 +33,11 @@ class Bootstrap extends AbstractActionController
     public $session;
     public $subdomain = false;
     protected $container;
+
+    public function setEventManager(EventManagerInterface $events) {
+        parent::setEventManager($events);
+        $this->e = $events;
+    }
 
     public function preDispatch()
     {

@@ -84,6 +84,7 @@ class Mail
     public function sendEmail()
     {
         $this->_transport->send($this->_message);
+        $this->_transport->disconnect();
     }
 
     /**

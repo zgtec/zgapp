@@ -8,6 +8,7 @@
 namespace ZgApp\Model;
 
 use Zend\Log\Writer\Db as Writer;
+use Zend\Log\Filter\Priority;
 
 /**
  *
@@ -43,10 +44,13 @@ class LogDb extends \Zend\Log\Logger
      * @param $dbconfig
      * @param string $table
      */
-    public function addWriterPath($dbconfig, $table = 'logs')
+    public function addWriterPath($dbconfig, $table = 'logs',  $priority = false)
     {
         $writer = new Writer($dbconfig, $table, $this->columnMapping);
         $writer->setFormatter(new \Zend\Log\Formatter\Db('Y-m-d H:i:s'));
+        if ($priority) {
+            $writer->addFilter(new Priority($priority));
+        }
         $this->addWriter($writer);
     }
 }

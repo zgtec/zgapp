@@ -54,7 +54,7 @@ class AuthAcl extends AbstractPlugin
      */
     public function setUserPermissions($role)
     {
-        if ($this->user->role != $role || $this->user->role=='guest') {
+        if ($this->user->role != $role || $this->user->role == 'guest') {
             return false;
         }
 
@@ -68,7 +68,7 @@ class AuthAcl extends AbstractPlugin
                 $permissions[] = $pk;
             }
         } else {
-            $userPermissions = explode("|", $this->user->permissions);
+            $userPermissions = explode("|", str_replace('@','\\', $this->user->permissions));
             foreach ($userPermissions as $up) {
                 if (isset($permissionsSelect[$up])) {
                     $permissions[] = $up;
@@ -125,7 +125,7 @@ class AuthAcl extends AbstractPlugin
         $acl = $this->getAcl();
 
         // Granting Access to Super User
-        if ($this->user->role!='guest' && $this->user->superuser) {
+        if ($this->user->role != 'guest' && $this->user->superuser) {
             return true;
         }
 
@@ -253,6 +253,26 @@ class AuthAcl extends AbstractPlugin
     public function getLockTime()
     {
         return $this->controller->service('auth')->getLockTime();
+    }
+
+    /**
+     * Function tempPassword
+     *
+     * Temporary Password Generator
+     *
+     * @return string
+     */
+    public function tempPassword()
+    {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        $length = rand(8, 12);
+        for ($i = 0; $i < $length; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
     }
 
 }

@@ -27,6 +27,7 @@ class User extends Entity
     public $clientid;
     public $email;
     public $password;
+    public $resetpassword;
     public $salt;
     public $role;
     public $superuser;
@@ -57,6 +58,7 @@ class User extends Entity
             "clientid",
             "email",
             "password",
+            "resetpassword",
             "salt",
             "role",
             "superuser",
